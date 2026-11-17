@@ -1,0 +1,18 @@
+@import "tailwindcss";
+
+*{
+    scroll-behavior: smooth;
+}
+
+#popParent{
+    animation: animation 2000ms linear;
+}
+
+@keyframes animation {
+    from{
+        opacity: 0;
+    }
+    to{
+        opacity: 1;
+    }
+}
