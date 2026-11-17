@@ -1,3 +1,7 @@
+const TitreRegex = /[a-zA-Z-0-9]{5,100}/;
+const DescriptionRegex = /[a-zA-Z-0-9]{20,1000}/;
+const submitFormbtn = document.getElementById('submitForm');
+
 // // const SubmitPopup = document.getElementById('cross');
 
 // // SubmitPopup.addEventListener('click', () => {
@@ -18,12 +22,16 @@ const fetchdata = async () => {
             console.log("API status " + results.status);
             return [];
         }
-        displayCrads(results.data)
+        displayCards(results.data)
     }
     catch (err) {
         console.log("this is error : " + err);
         return [];
     }
+}
+
+const AddNewActivity = async () => {
+
 }
 
 fetchdata()
@@ -59,10 +67,59 @@ const CreateCards = (auteur, description, duree, objectifs, theme, titre) => {
     p1.classList.add('font-normal', 'text-[18px]')
 }
 
-const displayCrads = (argm) => {
-    console.log(argm);
-
+const displayCards = (argm) => {
     argm.map((index) => {
         CreateCards(index.auteur, index.description, index.duree, index.objectifs, index.theme, index.titre)
     })
 }
+
+submitFormbtn.addEventListener('click', (event) => {
+    event.preventDefault();
+    const title = document.getElementById('title');
+    const description = document.getElementById('description');
+    const objectifs = document.getElementById('objectifs');
+    const duration = document.getElementById('duration');
+    const select = document.getElementsByTagName('select');
+
+    if (TitreRegex.test(title.value) || DescriptionRegex.test(description.value) || TitreRegex.test(objectifs.value) || (duration.value >= 10 && duration.value <= 20) || select[0].value != "") {
+        if (TitreRegex.test(title.value)) {
+            title.nextElementSibling.textContent = ''
+        }
+        if (DescriptionRegex.test(description.value)) {
+            description.nextElementSibling.textContent = ''
+        }
+        if (TitreRegex.test(objectifs.value)) {
+            objectifs.nextElementSibling.textContent = ''
+        }
+        if (duration.value >= 10 && duration.value <= 20) {
+            duration.nextElementSibling.textContent = ''
+        }
+        if (select[0].value != "") {
+            select[0].nextElementSibling.textContent = ''
+        }
+
+    }
+    if (!TitreRegex.test(title.value) || !DescriptionRegex.test(description.value) || !TitreRegex.test(objectifs.value) || !(duration.value >= 10 && duration.value <= 20) || select[0].value == "") {
+        if (!TitreRegex.test(title.value)) {
+            title.nextElementSibling.textContent = 'minimum 5 caracters needed up to 100';
+        }
+        if (!DescriptionRegex.test(description.value)) {
+            description.nextElementSibling.textContent = 'minimum 20 caracters needed up to 1000'
+        }
+        if (!TitreRegex.test(objectifs.value)) {
+            objectifs.nextElementSibling.textContent = 'please fill this section'
+        }
+        if (!(duration.value >= 10 && duration.value <= 20)) {
+            duration.nextElementSibling.textContent = '10 min is minimum up to 20 min'
+        }
+
+        if (select[0].value == "") {
+            select[0].nextElementSibling.textContent = 'choose an option'
+        }
+    }
+
+    if (TitreRegex.test(title.value) && DescriptionRegex.test(description.value) && TitreRegex.test(objectifs.value) && (duration.value >= 10 && duration.value <= 20) && select[0].value != "") {
+        AddNewActivity()
+    }
+
+});

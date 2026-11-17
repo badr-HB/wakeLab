@@ -47,44 +47,49 @@
         </div>
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-9 px-5" id="CardContainer">
         </div>
-        <form action="" id="form"
+        <form action="/src/index.html" id="form"
             class="my-15 border w-2/4 min-w-[320px] py-15 h-auto flex flex-col items-center gap-10 rounded-2xl mx-10">
             <div class="flex flex-col md:flex-row items-center space-y-5 md:space-y-0 w-full justify-evenly">
                 <div class="flex flex-col">
                     <label for="title" class="text-[18px]">activity title :</label>
                     <input type="text" name="title" placeholder="title"
-                        class="text-[16px] border py-3 w-full rounded-xl pl-3" />
+                        class="text-[16px] border py-3 w-full rounded-xl pl-3" id="title" />
+                    <p class="text-[14px] text-red-500"></p>
                 </div>
                 <div class="flex flex-col">
                     <label for="description" class="text-[18px]">description of the activity</label>
                     <input type="text" name="description" placeholder="description"
-                        class="text-[16px] border py-3 w-full rounded-xl pl-3">
+                        class="text-[16px] border py-3 w-full rounded-xl pl-3" id="description">
+                    <p class="text-[14px] text-red-500"></p>
                 </div>
             </div>
             <div class="flex flex-col md:flex-row items-center space-y-5 md:space-y-0 w-full justify-evenly">
                 <div class="flex flex-col ">
                     <label for="objectifs">objectf of this activity</label>
                     <input type="text" name="objectifs" placeholder="objectifs"
-                        class="text-[16px] border py-3 w-full rounded-xl pl-3">
+                        class="text-[16px] border py-3 w-full rounded-xl pl-3" id="objectifs" />
+                    <p class="text-[14px] text-red-500"></p>
                 </div>
                 <div class="flex flex-col">
                     <label for="duration">how much time?</label>
                     <input type="number" name="duration" placeholder="enter duration number"
-                        class="text-[16px] border py-3 w-full rounded-xl pl-3" />
+                        class="text-[16px] border py-3 w-full rounded-xl pl-3" id="duration" />
+                    <p class="text-[14px] text-red-500"></p>
                 </div>
             </div>
             <div>
                 <label for="theme"></label>
                 <select name="theme">
-                    <option value="">all themes</option>
+                    <option value="">choose theme</option>
                     <option value="jeu">jeu</option>
                     <option value="apprentissage">apprentissage</option>
                     <option value="exercice">exercice</option>
                     <option value="others">others</option>
                 </select>
+                <p class="text-[14px] text-red-500"></p>
             </div>
             <input value="create activity" class="cursor-pointer h-10 w-52 bg-green-500 rounded-[15px] text-white"
-                type="submit" />
+                type="submit" id="submitForm" />
         </form>
     </main>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
