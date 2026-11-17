@@ -32,7 +32,8 @@
         </div>
     </div> -->
     <main class="w-full h-full">
-        <div class="bg-blue-300 md:h-25 h-35 flex flex-col md:flex-row min-w-112.5 lg:justify-center justify-center items-center gap-4 mb-10">
+        <div
+            class="bg-blue-300 md:h-25 h-35 flex flex-col md:flex-row min-w-112.5 lg:justify-center justify-center items-center gap-4 mb-10">
             <div class="flex gap-5">
                 <input placeholder="search..." class="bg-white w-85 h-10 rounded-[15px] px-3" type="search"
                     id="search" />
@@ -44,14 +45,7 @@
                     class="lg:absolute top-7 right-15 cursor-pointer h-10 w-52 bg-green-500 rounded-[15px] text-white"
                     type="button" /></a>
         </div>
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-9 px-5">
-            <div class="w-full min-w-80 h-100 rounded-[15px] bg-gray-400 pl-4 pt-2 space-y-3">
-                <h2 class="text-2xl">titre</h2>
-                <p class="">author :</p>
-                <p>description</p>
-                <p>duration</p>
-                <p>theme</p>
-            </div>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-9 px-5" id="CardContainer">
         </div>
         <form action="" id="form"
             class="my-15 border w-2/4 min-w-[320px] py-15 h-auto flex flex-col items-center gap-10 rounded-2xl mx-10">
@@ -93,7 +87,6 @@
                 type="submit" />
         </form>
     </main>
-
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script src="./script.js" type="module"></script>
 </body>
