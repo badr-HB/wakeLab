@@ -7,6 +7,7 @@ const submitFormbtn = document.getElementById('submitForm');
 const ConfirmUserName = document.getElementById('registeruser');
 const SubmitPopup = document.getElementById('cross');
 const editname = document.getElementById('editName');
+const search = document.getElementById('clicksearch');
 const box = JSON.parse(localStorage.getItem('name'));
 
 if (box == null) {
@@ -30,12 +31,23 @@ const api = axios.create({
     headers: { "Content-Type": "application/json" }
 });
 
-const fetchdata = async () => {
+const fetchdata = async (searchForThis) => {
     try {
         const results = await api.get('/activites', {
             headers: { "Content-Type": "application/json" }
         });
-        displayCards(results.data)
+        const box = results.data;
+        if ((typeof searchForThis) == "string" && searchForThis != "") {
+            const filters = box.filter(t => t.titre == searchForThis)
+            console.log(filters);
+
+            displayCards(filters)
+        }
+        else {
+            displayCards(box)
+        }
+        console.log(typeof searchForThis);
+        console.log(searchForThis);
     }
     catch (err) {
         console.log("this is error : " + err);
@@ -96,6 +108,7 @@ const CreateCards = (auteur, description, duree, objectifs, theme, titre) => {
 }
 
 const displayCards = (data) => {
+    document.getElementById('CardContainer').innerHTML = "";
     data.map((index) => {
         CreateCards(index.auteur, index.description, index.duree, index.objectifs, index.theme, index.titre)
     })
@@ -170,6 +183,10 @@ ConfirmUserName.addEventListener('click', (event) => {
         error.classList.remove('hidden')
         error.textContent = 'no valid input'
     }
+})
 
+search.addEventListener('click', () => {
+    const InputToSearch = document.getElementById('search');
+    fetchdata(InputToSearch.value)
 
 })
