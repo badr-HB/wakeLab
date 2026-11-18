@@ -1,14 +1,30 @@
-const TitreRegex = /[a-zA-Z-0-9]{5,100}/;
-const DescriptionRegex = /[a-zA-Z-0-9]{20,1000}/;
+
+const TitreRegex = /[a-zA-Z-0-9- ]{5,100}/;
+const DescriptionRegex = /[a-zA-Z-0-9- ]{20,1000}/;
+const username = /[a-zA-Z-0-9- ]{5}/;
+
 const submitFormbtn = document.getElementById('submitForm');
+const ConfirmUserName = document.getElementById('registeruser');
+const SubmitPopup = document.getElementById('cross');
+const editname = document.getElementById('editName');
+const box = JSON.parse(localStorage.getItem('name'));
 
-// // const SubmitPopup = document.getElementById('cross');
+if (box == null) {
+    document.getElementById('popParent').classList.remove('flex')
+}
+else {
+    document.getElementById('popParent').classList.add('hidden')
+}
 
-// // SubmitPopup.addEventListener('click', () => {
-// //     document.getElementById('popParent').classList.remove('flex')
-// //     document.getElementById('popParent').classList.add('hidden')
+SubmitPopup.addEventListener('click', () => {
+    document.getElementById('popParent').classList.remove('flex')
+    document.getElementById('popParent').classList.add('hidden')
+})
+editname.addEventListener('click', () => {
+    document.getElementById('popParent').classList.remove('hidden')
+    document.getElementById('popParent').classList.add('flex')
+})
 
-// // })
 const api = axios.create({
     baseURL: "http://localhost:3000/api",
     headers: { "Content-Type": "application/json" }
@@ -16,12 +32,9 @@ const api = axios.create({
 
 const fetchdata = async () => {
     try {
-        const results = await api.get('/activites');
-
-        if (results.status != 200) {
-            console.log("API status " + results.status);
-            return [];
-        }
+        const results = await api.get('/activites', {
+            headers: { "Content-Type": "application/json" }
+        });
         displayCards(results.data)
     }
     catch (err) {
@@ -30,7 +43,22 @@ const fetchdata = async () => {
     }
 }
 
-const AddNewActivity = async () => {
+const AddNewActivity = async (title, description, objectifs, duration, options) => {
+    const data = {
+        titre: title,
+        theme: options,
+        objectifs: objectifs,
+        duree: Number(duration),
+        description: description,
+        auteur: box
+    }
+    try {
+        const results = await api.post('/activites', data)
+        window.location.reload(fetchdata())
+    }
+    catch (err) {
+        console.log("cannot post because: " + err);
+    }
 
 }
 
@@ -58,8 +86,8 @@ const CreateCards = (auteur, description, duree, objectifs, theme, titre) => {
     p3.textContent = `duration of activity ${duree}`;
     p4.textContent = `${theme}`;
     p5.textContent = `${objectifs}`;
-    div.classList.add('w-full', 'min-w-80', 'h-100', 'rounded-[15px]', 'bg-gray-400', 'pl-4', 'space-y-5', 'flex', 'flex-col', 'justify-center')
-    h2.classList.add('text-[30px]', 'font-medium')
+    div.classList.add('w-full', 'min-w-80', 'h-100', 'rounded-[15px]', 'bg-gray-400', 'pl-4', 'space-y-5', 'flex', 'flex-col', 'justify-center', 'overflow-auto')
+    h2.classList.add('text-2xl', 'font-medium')
     p2.classList.add('font-normal', 'text-[18px]')
     p3.classList.add('font-normal', 'text-[18px]')
     p5.classList.add('font-normal', 'text-[18px]')
@@ -67,8 +95,8 @@ const CreateCards = (auteur, description, duree, objectifs, theme, titre) => {
     p1.classList.add('font-normal', 'text-[18px]')
 }
 
-const displayCards = (argm) => {
-    argm.map((index) => {
+const displayCards = (data) => {
+    data.map((index) => {
         CreateCards(index.auteur, index.description, index.duree, index.objectifs, index.theme, index.titre)
     })
 }
@@ -97,7 +125,6 @@ submitFormbtn.addEventListener('click', (event) => {
         if (select[0].value != "") {
             select[0].nextElementSibling.textContent = ''
         }
-
     }
     if (!TitreRegex.test(title.value) || !DescriptionRegex.test(description.value) || !TitreRegex.test(objectifs.value) || !(duration.value >= 10 && duration.value <= 20) || select[0].value == "") {
         if (!TitreRegex.test(title.value)) {
@@ -119,7 +146,30 @@ submitFormbtn.addEventListener('click', (event) => {
     }
 
     if (TitreRegex.test(title.value) && DescriptionRegex.test(description.value) && TitreRegex.test(objectifs.value) && (duration.value >= 10 && duration.value <= 20) && select[0].value != "") {
-        AddNewActivity()
+        AddNewActivity(title.value, description.value, objectifs.value, duration.value, select[0].value);
+
     }
 
 });
+
+ConfirmUserName.addEventListener('click', (event) => {
+    event.preventDefault();
+    const error = document.querySelector('.danger');
+    const inputName = document.getElementById('usernameInput');
+
+    if (username.test(inputName.value) && / /.test(inputName.value)) {
+        localStorage.setItem('name', JSON.stringify(inputName.value));
+        error.classList.add('hidden');
+        if (inputName.value == box) {
+            error.classList.remove('hidden');
+            error.textContent = 'user already exists';
+        }
+
+    }
+    else {
+        error.classList.remove('hidden')
+        error.textContent = 'no valid input'
+    }
+
+
+})

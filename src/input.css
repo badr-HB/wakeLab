@@ -5,7 +5,7 @@
 }
 
 #popParent{
-    animation: animation 2000ms linear;
+    animation: animation 1000ms linear;
 }
 
 @keyframes animation {
