@@ -10,13 +10,10 @@
 </head>
 </head>
 
-<body class="w-full h-full bg-[#eef3f9] scroll-smooth">
+<body class="w-full h-full bg-[#eef3f9]">
     <div class="w-full h-full absolute" id="popParent">
         <div class="w-full h-full flex items-center justify-center">
             <div class="xl:w-1/4 w-1/2 h-auto py-10 bg-white border rounded-3xl flex flex-col justify-center fixed">
-                <div class="relative">
-                    <span class="absolute -top-8 right-3 cursor-pointer" id="cross">❌</span>
-                </div>
                 <form action="" class="space-y-6 px-4" id="usernameForm">
                     <div class="flex flex-col space-y-3">
                         <label class="font-medium" for="name">enter your name :</label>
@@ -30,11 +27,11 @@
             </div>
         </div>
     </div>
-    <main class="w-full h-full">
+    <main class="w-full h-full" id="themain">
         <div class="relative md:h-40 h-50">
             <div
                 class="w-full bg-blue-300 md:h-30 h-40 flex flex-col md:flex-row min-w-112.5 lg:justify-between justify-center items-center gap-4 mb-10 px-10 fixed">
-                <div>
+                <div class="flex items-center gap-2">
                     <input value="edit name" class="cursor-pointer h-10 w-52 bg-green-500 rounded-[15px] text-white"
                         type="button" id="editName" />
                 </div>
@@ -49,7 +46,16 @@
                         type="button" /></a>
             </div>
         </div>
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-9 px-5" id="CardContainer">
+        <div class="px-5 space-y-10">
+            <div class="h-auto lg:w-1/2 md:w-[70%] w-full space-y-2 space-x-3 flex">
+                <input type="button" value="jeu" class="border px-6 py-1 rounded-xl cursor-pointer hover:bg-gray-400 hover:border-transparent hover:text-white" id="filterjeu"/>
+                <input type="button" value="apprentissage" class="border px-6 py-1 rounded-xl cursor-pointer hover:bg-gray-400 hover:border-transparent hover:text-white" id="filterappre"/>
+                <input type="button" value="exercice" class="border px-6 py-1 rounded-xl cursor-pointer hover:bg-gray-400 hover:border-transparent hover:text-white" id="filterex"/>
+                <input type="button" value="others" class="border px-6 py-1 rounded-xl cursor-pointer hover:bg-gray-400 hover:border-transparent hover:text-white" id="filterothers"/>
+                <p class="font-semibold text-xl w-fit" id="showName"></p>
+            </div>
+            <div id="CardContainer" class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-9 ">
+            </div>
         </div>
         <form action="/src/index.html" id="form"
             class="my-15 border w-2/4 min-w-[320px] py-15 h-auto flex flex-col items-center gap-10 rounded-2xl mx-10">
@@ -97,6 +103,7 @@
         </form>
     </main>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="./script.js" type="module"></script>
 </body>
 
